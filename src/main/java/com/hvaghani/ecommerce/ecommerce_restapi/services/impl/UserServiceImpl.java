@@ -7,6 +7,7 @@ import com.hvaghani.ecommerce.ecommerce_restapi.entities.enums.Role;
 import com.hvaghani.ecommerce.ecommerce_restapi.exceptions.ResourceNotFoundException;
 import com.hvaghani.ecommerce.ecommerce_restapi.repositories.UserRepository;
 import com.hvaghani.ecommerce.ecommerce_restapi.services.UserService;
+import com.hvaghani.ecommerce.ecommerce_restapi.services.utilities.PropertyCopyUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -49,7 +50,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(Long userId, UserDto userDto) {
-        User user = modelMapper.map(userDto, User.class);
 
         if (userId == null) {
             throw new IllegalArgumentException("User ID must not be null for update.");
@@ -58,16 +58,8 @@ public class UserServiceImpl implements UserService {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with ID: " + userId + " not found!"));
 
-        if (user.getFirstName() != null) {
-            existingUser.setFirstName(user.getFirstName());
-        }
-
-        if (user.getLastName() != null) {
-            existingUser.setLastName(user.getLastName());
-        }
-        if (user.getEmail() != null) {
-            existingUser.setEmail(user.getEmail());
-        }
+        User sourceUser = modelMapper.map(userDto, User.class);
+        PropertyCopyUtils.copyNonNullProperties(sourceUser, existingUser);
         existingUser.setLastEditedAt(LocalDateTime.now());
         User updatedUser = userRepository.save(existingUser);
         return modelMapper.map(updatedUser, UserDto.class);

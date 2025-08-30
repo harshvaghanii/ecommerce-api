@@ -27,7 +27,6 @@ public class Order {
     @CreationTimestamp
     private LocalDateTime orderDate;
 
-    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     OrderStatus status;
 
