@@ -24,8 +24,8 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 @Slf4j
 public class CartServiceImpl implements CartService {
-    private final UserRepository userRepository;
 
+    private final UserRepository userRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final ProductRepository productRepository;
