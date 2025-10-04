@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -28,5 +31,10 @@ public class Product {
     private String category;
 
     private String brand;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    private LocalDateTime lastUpdatedAt;
 
 }

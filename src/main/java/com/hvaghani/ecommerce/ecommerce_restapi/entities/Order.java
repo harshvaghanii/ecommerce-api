@@ -3,6 +3,7 @@ package com.hvaghani.ecommerce.ecommerce_restapi.entities;
 import com.hvaghani.ecommerce.ecommerce_restapi.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Order {
 
     @Id
@@ -27,7 +29,6 @@ public class Order {
     @CreationTimestamp
     private LocalDateTime orderDate;
 
-    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     OrderStatus status;
 
